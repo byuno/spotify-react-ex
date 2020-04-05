@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
 import './App.css';
-let defaultTextColor = '#fff'
 let defaultStyle = {
-  color: defaultTextColor,
+  color: '#fff',
   background: '#000'
 }
 // create a component folder for Aggregate, [add other components to this list]
