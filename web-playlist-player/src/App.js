@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import './App.css';
 
 let defaultStyle = {
@@ -26,11 +26,11 @@ let fakeServerData = {
         ]
       },
       {
-        name: 'Playlist 3',
+        name: 'We ded',
         songs: [
-          {name: 'Chanson', duration: 1234}, 
-          {name: 'Song', duration: 543}, 
-          {name: 'Songu', duration: 654}
+          {name: 'Kin', duration: 1234}, 
+          {name: 'Lumia', duration: 543}, 
+          {name: 'Zune', duration: 654}
         ]
       }
     ]
@@ -56,20 +56,23 @@ function HoursCoutner(props){
 function Filter(){
   return(
     <div style={defaultStyle}>
-      <img/>
+      <img alt=''/>
       <input type="text"/>
       Filter
     </div>
   );
 }
 
-function Playlist(){
+function Playlist(props){
+  console.log(props)
   return(
     <div style={{...defaultStyle, width: "25%", display: "inline-block"}}>
-      <img/>
-      <h3>Playlist Name</h3>
+      <img alt=''/>
+      <h3>{props.playlist.name}</h3>
       <ul>
-      <li>Song 1</li><li>Song 2</li><li>Song 3</li>
+        {props.playlist.songs.map(song => 
+          <li>{song.name}</li>
+        )}
       </ul>
     </div>
   );
@@ -93,12 +96,14 @@ export default function App() {
       <h1>
         Title {fakeServerData.user.name} 
       </h1>
-      <PlaylistCounter count={numPlaylists}> </PlaylistCounter>
-      <HoursCoutner time={totalDuration}> </HoursCoutner>
-      <Filter></Filter>
-      <Playlist></Playlist>
-      <Playlist></Playlist>
-      <Playlist></Playlist>
+      <PlaylistCounter count={numPlaylists}/> 
+      <HoursCoutner time={totalDuration}/> 
+      <Filter/> 
+        {
+          fakeServerData.playlists.map(playlist => 
+            <Playlist key={playlist.name} playlist={playlist} />
+  
+        )}
     </div>
   );
 }
