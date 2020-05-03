@@ -7,7 +7,7 @@ let defaultStyle = {
 }
 
 let fakeServerData = { 
-    user : { name: "Bobby"},
+    user : { name: "Tester"},
     playlists: [
       {
         name: 'My Favorites',
@@ -35,6 +35,8 @@ let fakeServerData = {
       }
     ]
   };
+
+  let searchPlaylistName = { filterString: "we"};
 
 // create a component folder for Aggregate, [add other components to this list]
 function PlaylistCounter(props){
@@ -78,11 +80,24 @@ function Playlist(props){
   );
 }
 
+function Player(){
+  return(
+
+  <div>
+  <button>Shuffle</button>
+  <button>Previous Track</button>
+  <button>Play</button>
+  <button>Next Track</button>
+  <button>Repeat Track</button>
+</div>
+  )
+}
+
 
 export default function App() {
 
   let numPlaylists = fakeServerData.playlists.length;
-
+  
   let allSongs = fakeServerData.playlists.reduce((songs, eachPlaylist) => {
     return songs.concat(eachPlaylist.songs)
   },[])
@@ -91,6 +106,8 @@ export default function App() {
     return Math.round(((sum + eachSong.duration)/60))
   }, 0)  
   
+  
+
   return (
     <div className="App">
       <h1>
@@ -98,12 +115,14 @@ export default function App() {
       </h1>
       <PlaylistCounter count={numPlaylists}/> 
       <HoursCoutner time={totalDuration}/> 
-      <Filter/> 
-        {
-          fakeServerData.playlists.map(playlist => 
+      <Filter onTextChange={text => this }/> 
+        { fakeServerData.playlists.filter(
+          playlist => playlist.name.toLowerCase().includes(searchPlaylistName.filterString.toLowerCase())
+        ).map(playlist => 
             <Playlist key={playlist.name} playlist={playlist} />
   
         )}
+    <Player/>
     </div>
   );
 }
